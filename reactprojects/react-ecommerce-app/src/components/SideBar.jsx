@@ -1,32 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "../Styling/sidebar.css"
 const Sidebar = ({setSidebarOpen,isSidebarOpen}) => {
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
-  
+  const sidebarcolor=()=>{
+    if(!isSidebarOpen)
+    return{ cursor: 'pointer',color: 'whitesmoke'}
+    return { cursor: 'pointer',color: 'rgb(19,25,33)'}
+  }
   return (
     <div
       className={`sidebar ${isSidebarOpen ? 'open':''}`}
       style={{
-        padding: '20px',
+        paddingTop: '20px',
+        paddingLeft: '20px',
         boxSizing: 'border-box',
         display: 'flex',
         flexDirection: 'column',
         transition: 'width 0.3s ease-in-out',
+        
       }}
     >
       <div
         className="hamburger"
         onClick={toggleSidebar}
-        style={{ cursor: 'pointer'}}
+        style={sidebarcolor()}
       >
         &#9776;
       </div>
       <ul style={{ listStyleType: 'none', padding: 0, marginTop: '20px' }}>
         <li style={{ textDecoration: 'none' }}>
           <h6>
-          {localStorage.getItem('UserName')===null?'Guest':localStorage.getItem('UserName')}
+          {(localStorage.getItem('UserName')===null)?'Guest':localStorage.getItem('UserName')}
           </h6>
         </li>
         <li>

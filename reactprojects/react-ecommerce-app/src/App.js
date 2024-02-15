@@ -1,29 +1,11 @@
 import './App.css';
-import Googleauth from './Firebase/Googleauth';
+import Login from './components/Login'
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import Shoppingmain from './components/Shoppingmain';
-import { useEffect ,useState} from 'react';
+import Shoppingbody from './components/Shoppingbody';
+import EachItem from './components/EachItem';
 
 function App() {
-  const [showSignIn, setShowSignIn] = useState(true);
-
-  useEffect(() => {
-    const handlePathChange = () => {
-      const newPath = window.location.pathname;
-      setShowSignIn(newPath === '/');
-    };
-
-    // Attach the event listener
-    window.addEventListener('popstate', handlePathChange);
-
-    // Call handlePathChange initially to set the initial state correctly
-    handlePathChange();
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('popstate', handlePathChange);
-    };
-  }, []); // The empty dependency array ensures that the effect runs only once on mount
 
   return (
     <>
@@ -31,8 +13,11 @@ function App() {
       <BrowserRouter>
       
         <Routes>
-          <Route path='/shoppingmain' element={<Shoppingmain/>} />
-          <Route path='/' element={showSignIn && <Googleauth></Googleauth>} />
+          <Route path='/shoppingmain' element={<Shoppingmain/>} >
+            <Route index element={<Shoppingbody></Shoppingbody>}></Route>
+            <Route path=':id' element={<EachItem/>}></Route>
+            </Route>
+          <Route path='/' element={<Login/>} />
         </Routes>
       </BrowserRouter>
     </>

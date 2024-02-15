@@ -1,8 +1,11 @@
-import { createStore,combineReducers } from "redux";
+import { createStore,combineReducers,applyMiddleware } from "redux";
+import { thunk } from "redux-thunk";
+import Axios from "axios";
 
 const initialState={
     products:[],
     cart:[],
+    matcheditems:[]
 };
 export const addProducts=(data)=>{
     return{
@@ -10,13 +13,13 @@ export const addProducts=(data)=>{
         payload:data
     }
 }
-export const addusername=(data)=>
-{
+export const searchMatchedItems=(data)=>{
     return{
-        type:"ADD_USERNAME",
-        payload:data
+        type:"SEARCH_MATCHEDITEMS",
+        payload:data,
     }
 }
+
 export const addProductsToCart=(data,count)=>
 {
     return{
@@ -37,8 +40,8 @@ const addProductsReducers=(state=initialState,action)=>
     {
         case "ADD_PRODUCTS":
             return {
+                ...state,
                 products:action.payload,
-                cart:state.cart
             }
         case "ADD_PRODUCTS_TO_CART":
             if(action.payload.count>1)
@@ -56,12 +59,12 @@ const addProductsReducers=(state=initialState,action)=>
                 }
 
                 return {
-                    products: state.products,
+                    ...state,
                     cart: updatedCart
                 };
             }
             return{
-                products:state.products,
+                ...state,
                 cart:[...state.cart,{...action.payload.data,count:action.payload.count}]
             }
         case "REMOVE_PRODUCTS_FROM_CART":
@@ -71,7 +74,7 @@ const addProductsReducers=(state=initialState,action)=>
                 let updatedCart=[...state.cart]
                 updatedCart.splice(index,1)
                 return{
-                    products:state.products,
+                    ...state,
                     cart:updatedCart
                 }
             }
@@ -81,10 +84,18 @@ const addProductsReducers=(state=initialState,action)=>
                 let updatedCart=[...state.cart]
                 updatedCart[index].count=action.payload.count
                 return{
-                    products:state.products,
+                    ...state,
                     cart:updatedCart
                 }
             }
+        case "SEARCH_MATCHEDITEMS":
+            let regex=new RegExp(action.payload,"i");
+            let matcheditemsarr=state.products.filter((val)=>regex.test(val.title));
+            return{
+                ...state,
+                matcheditems:matcheditemsarr
+            }
+
         default:
             return state
     }
@@ -95,5 +106,18 @@ const rootReducer=combineReducers({
     product:addProductsReducers,
 })
 
-export const productstore=createStore(rootReducer)
 
+
+export const productstore=createStore(rootReducer,applyMiddleware(thunk));
+
+const getAllProducts=()=>
+{
+    return dispatch=>
+    {
+        Axios.get("https://fakestoreapi.com/products").then(output=>dispatch(addProducts(output.data)))
+    }
+}
+
+productstore.dispatch(getAllProducts())
+
+console.log(productstore.getState());

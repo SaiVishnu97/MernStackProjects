@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from './Navbar';
 import Shoppingbody from './Shoppingbody';
 import Sidebar from './SideBar';
+import { Outlet } from 'react-router-dom';
 function Shoppingmain() {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
@@ -9,7 +10,8 @@ function Shoppingmain() {
     <div className={`GridClass ${isSidebarOpen ? 'open' : ''}`}>
           <Sidebar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen}></Sidebar>
       <Navbar></Navbar>
-    <Shoppingbody></Shoppingbody></div>
+    <Outlet/>
+    </div>
   )
 }
 

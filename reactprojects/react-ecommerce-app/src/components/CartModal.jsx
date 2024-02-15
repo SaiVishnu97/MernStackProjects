@@ -9,7 +9,6 @@ function CartModal(props) {
  
     const cartproducts=useSelector((output)=>{return output.product.cart;})
     const dispatch=useDispatch()
-    console.log("CartModal is called",cartproducts)
    
     const handleClose = () => props.setShow(false);
   

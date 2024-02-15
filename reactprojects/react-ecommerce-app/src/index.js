@@ -8,7 +8,6 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import { Provider } from 'react-redux';
 import { productstore } from './redux';
 const root = ReactDOM.createRoot(document.getElementById('root'));
-console.log(productstore.getState())
 root.render(
   <React.StrictMode>
     <Provider store={productstore}>

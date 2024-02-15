@@ -36,15 +36,16 @@ li {
   margin-bottom: 10px; /* Adjust the margin between list items */
 }
 
-li a {
+a {
   text-decoration: none;
   color: rgb(15, 14, 14);
   padding: 10px;
   transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
   display: block;
 }
 
-li a:hover {
+a:hover {
   background-color: #779ed1; /* Thicker background on hover */
 }
 
