@@ -13,6 +13,7 @@ function Googleauth() {
  const signInWithgoogle=()=>signInWithPopup(auth,provider).then((result)=>{
     
    const username=result.user.displayName;
+   if(username)
    localStorage.setItem("UserName", username);
     navigate("/shoppingmain");
 }
@@ -20,7 +21,7 @@ function Googleauth() {
   return (
 
    <>
-   <div  style={{margin:'10%',backgroundColor:'#ffff',border: 'solid black 1px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',borderRadius:'8px',width:'fit-content'}}>
+   <div className='GoogleAuth'>
       <button
         type="button"
         className="btn btn-light border-white"

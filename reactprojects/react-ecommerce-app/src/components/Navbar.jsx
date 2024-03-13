@@ -19,25 +19,28 @@ function Navbar() {
     if(event.key==='Enter')
     {
       event.preventDefault();
-    
+
       dispatch(searchMatchedItems(searcheditem));
       setSearchQuery({items:searcheditem});
     }
   }
-
+  const onHandleChange=(event)=>{
+    const result = event.target.value.replace(/[^a-z]/gi, '');
+    setSearchedItem(result);
+  }
   return (
     <div >
       
     <div  className='NavBarClass'>
         <div>
-          <Link style={{color:'whitesmoke'}} to='/shoppingmain' > <i className="fa-solid fa-house" style={{color: '#ededed'}}></i> Home <span className="sr-only">(current)</span></Link>
+          <Link style={{color:'whitesmoke',textDecoration:'none'}} to='/shoppingmain' > <i className="fa-solid fa-house" style={{color: '#ededed'}}></i> Home <span className="sr-only">(current)</span></Link>
         </div>
         <div>
-          <Link style={{color:'whitesmoke'} } to='/shoppingmain'>All Products</Link>
+          <Link style={{color:'whitesmoke', textDecoration:'none'} } to='/shoppingmain'>All Products</Link>
         </div>
       <div>
       <form className="form-inline my-2 my-lg-0" >
-        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={searcheditem} onChange={(e)=>setSearchedItem(e.target.value)} onKeyPress={(event)=>searchItemsFunc(event)}/>
+        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={searcheditem} onChange={onHandleChange} onKeyPress={(event)=>searchItemsFunc(event)}/>
       </form>
       </div>
     <div>

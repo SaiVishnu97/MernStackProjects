@@ -80,7 +80,15 @@
   height: 100%;
   border-radius: 20px;
 }
-
+.GoogleAuth
+{
+  margin:10%;
+  background-color: #ffff;
+  border: solid black 1px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius:8px;
+  width: fit-content
+}
 body{
   background-color: gray;
 }
